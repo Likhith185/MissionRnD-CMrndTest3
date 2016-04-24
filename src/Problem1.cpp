@@ -50,7 +50,22 @@ struct node{
 	struct node *right;
 };
 
+void preorder(struct node *root, int *n)
+{
+	if (root != NULL)
+	{
+		*n = *n + root->data;
+		preorder(root->left, n);
+		preorder(root->right, n);
+	}
+}
 
-int get_missing_value(struct node *root,int n){
-    return -1;
+int get_missing_value(struct node *root, int n)
+{
+	if (n <= 0 || !root)
+		return -1;
+	int sum = n * (n + 1) / 2;
+	int sum1 = 0;
+	preorder(root, &sum1);
+	return sum - sum1;
 }
