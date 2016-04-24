@@ -70,7 +70,26 @@ struct node{
 	struct node *left;
 	struct node *right;
 };
-
+void inOrTra(struct node_dll **head, struct node *root, int *res){
+	if (root == NULL || *res == 0)	return;
+	if (head == NULL){
+		*res = 0;
+		return;
+	}
+	inOrTra(head, root->left, res);
+	if (root->data == (*head)->data){
+		(*head) = (*head)->next;
+		*res = 1;
+	}
+	else{
+		*res = 0;
+	}
+	inOrTra(head, root->right, res);
+}
 int is_identical(struct node_dll *head, struct node *root){
-	return -1;
+	if (head == NULL || root == NULL)	return -1;
+	int result = 1;
+	inOrTra(&head, root, &result);
+	if (result && head == NULL)	return 1;
+	return 0;
 }
